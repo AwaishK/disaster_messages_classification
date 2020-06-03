@@ -1,3 +1,6 @@
+import nltk
+nltk.download(['punkt', 'wordnet', 'stopwords'])
+
 import re
 import pandas as pd
 from functools import lru_cache

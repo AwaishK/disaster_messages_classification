@@ -2,9 +2,6 @@ import sys, os
 sys.path.append(os.path.join('models', '..'))
 from utils.utils import WordCount, tokenize
 
-import nltk
-nltk.download(['punkt', 'wordnet', 'stopwords'])
-
 import sys
 import pandas as pd
 import re
