@@ -5,52 +5,14 @@ import pandas as pd
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
-from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
 from sklearn.base import BaseEstimator, TransformerMixin
 
+from webapp import app
 
-app = Flask(__name__)
-
-
-class WordCount(BaseEstimator, TransformerMixin):
-    """This class is used to tansform the text to a number of words in text to be used as a feature.
-    """
-    def __init__(self, normalized=True):
-        """
-        params: 
-            normalized: it is either True or False, if true normalized the number of words in text with number of words in data set
-        """
-        self.normalized = normalized
-        
-    def fit(self, x, y=None):
-        return self
-
-    def transform(self, X):
-        total = len(tokenize(" ".join(list(X))))
-        count = lambda x: len(tokenize(x))/total if self.normalized else len(tokenize(x))
-        X_tagged = pd.Series(X).apply(count)
-        return pd.DataFrame(X_tagged)
-
-
-def tokenize(text):
-    """This function is used to clean, tokenize and normalize the given string.
-    params:
-        text: string to be tokenized
-    returns: tokenized words
-    """
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-
-    return clean_tokens
 
 # load data
 engine = create_engine('sqlite:///./disaster_response/data/DisasterResponse.db')
@@ -117,10 +79,3 @@ def go():
         query=query,
         classification_result=classification_results
     )
-
-
-def main():
-    app.run(host='0.0.0.0', port=3001, debug=True)
-
-if __name__ == "__main__":
-    main()
