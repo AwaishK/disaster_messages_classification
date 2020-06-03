@@ -1,3 +1,5 @@
+from utils.utils import WordCount, tokenize
+
 import json
 import plotly
 import pandas as pd
@@ -12,7 +14,6 @@ from sqlalchemy import create_engine
 from sklearn.base import BaseEstimator, TransformerMixin
 
 from webapp import app
-
 
 # load data
 engine = create_engine('sqlite:///./data/DisasterResponse.db')
@@ -79,3 +80,4 @@ def go():
         query=query,
         classification_result=classification_results
     )
+
