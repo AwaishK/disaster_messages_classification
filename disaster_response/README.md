@@ -7,10 +7,17 @@
         `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
     - To run ML pipeline that trains classifier and saves
         `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
-2. Put the below line of code in disaster_response/disaster.py in the bottom.
+
+#### Two ways to run the app
+##### way 1
+1. run the following command in project's root directory (disaster_response directory)
+    `gunicorn webapp:app -b 127.0.0.2:8000`
+   
+##### way 2
+1. Put the below line of code in disaster_response/disaster.py in the bottom.
     `app.run(host='0.0.0.0', port=3001, debug=True)`
-    
-3. Run the following command in the disaster_response directory to run your web app.
+
+2. Run the following command in the disaster_response directory to run your web app.
     `python disaster.py`
 
 3. Go to http://0.0.0.0:3001/
