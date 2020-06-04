@@ -1,6 +1,6 @@
 # Disaster Response Pipeline Project
 
-### Github Repo
+### Github Repo:
 https://github.com/AwaishK/disaster_messages_classification
 
 ### Instructions:
