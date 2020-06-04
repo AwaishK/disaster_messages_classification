@@ -19,12 +19,21 @@ from sklearn.multioutput import MultiOutputClassifier
 
 
 def load_data(database_filepath):
-    """this function is used to load the data from database and split it into features and target.
-    params:
-        database_filepath: path of database file with extention .db
-    returns: features as X, target as Y and classification classes as category_names
+    """Gets the database filepath, loads the data from database and split them to features and target values.
+
+    Parameters
+    ----------
+    database_filepath : string
+        path of database file (must include .db file extention)
+    Returns
+    -------
+    Series
+        series of text strings
+    DataFrame
+        dataframe containing the values for target classes
+    List
+        list containing the names for classes
     """
-   
     # create the engine and read data
     engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql_table('disaster_messages', engine) 
@@ -39,8 +48,12 @@ def load_data(database_filepath):
 
 
 def build_model():
-    """This function used to define the pipeline, parameters and build the multi-class classification model.
-    returns: model
+    """Defines the pipeline, parameters and build the multi-class classification model.
+
+    Returns
+    -------
+    Model
+        a classification model
     """
     pipeline = Pipeline([
         ('features', FeatureUnion([
@@ -63,12 +76,18 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    """This function is used to evaluate the model using recall, precision and f1-score using classification_report from sklearn
-    params:
-        model: trained classification model.
-        X_test: features to test the model on.
-        Y_test: target classes for test data.
-        category_names: classes names
+    """Gets the model, test data, target values and classes and print the recall, precision and f1-score.
+
+    Parameters
+    ----------
+    model: Model
+        trained classification model.
+    X_test: Series
+        series of string used as features for test data set
+    Y_test: DataFrame
+        a dataframe consist of target class values
+    category_names: list
+        list of names of classes
     """
     y_pred = model.predict(X_test)
     y_pred_df = pd.DataFrame(y_pred, columns=category_names) 
@@ -83,10 +102,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
-    """save the model to a pickle file
-    params:
-        model: trained classification model.
-        model_filepath: file path to store the model 
+    """Gets the model and model filepath, and stores the model as pickle file.
+
+    Parameters
+    ----------
+    model: Model
+        a trained classification model
+    model_filepath : string
+        path of pickle where to store the model
     """
     joblib.dump(model, open(model_filepath, 'wb'))
 

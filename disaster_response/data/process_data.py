@@ -3,11 +3,18 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
-    """This function is used to load the data from csv files and return merged dataframe.
-    params:
-        messages_filepath: contains the path to csv file for messages data.
-        categories_filepath: contains the path to csv file for category data.
-    returns: merged dataframe.
+    """Gets the messages_filepath and categories_filepath, loads the data and merge it.
+
+    Parameters
+    ----------
+    messages_filepath : string
+        path of csv file having messages data
+    categories_filepath : string
+        path of csv file having categories data
+    Returns
+    -------
+    DataFrame
+        dataframe having merged message and categories data
     """
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
@@ -15,10 +22,16 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-    """This function is used to clean the dataframe.
-    params:
-        df: df to clean.
-    returns cleaned dataframe.
+    """Gets the dataframe and clean data.
+
+    Parameters
+    ----------
+    df : DataFrame
+        a dataframe having data
+    Returns
+    -------
+    DataFrame
+        a dataframe having clean data
     """
     # create a dataframe of the 36 individual category columns
     categories = df.categories.str.split(';', expand=True)
@@ -42,10 +55,14 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
-    """This function is used to save to data from dataframe to sqlite database.
-    params:
-        df: dataframe containing the data
-        database_filename: filename for database
+    """Gets the dataframe and database filename and it store the data on the sqlite database.
+
+    Parameters
+    ----------
+    df : string
+        a dataframe having data
+    database_filename : string
+        filename where database is stored
     """
     engine = create_engine(f'sqlite:///{database_filename}')
     df.to_sql('disaster_messages', engine, index=False)  
