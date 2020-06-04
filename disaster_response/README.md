@@ -1,5 +1,8 @@
 # Disaster Response Pipeline Project
 
+### Github Repo
+https://github.com/AwaishK/disaster_messages_classification
+
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
